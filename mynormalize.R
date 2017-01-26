@@ -2,7 +2,7 @@ mynormalize<-function(m,type="znorm"){
   if (type=="znorm"){ ##standard z-norm procedure,mean 0, sd = 1
     (m-mean(m,na.rm=TRUE))/sd(m,na.rm=TRUE)
   }
-  else if (type=="normalrange") { ##normalize and scaled between -1 to 1, max value set to 1
+  else if (type=="normalrange") { ##normalize and scaled between -1 to 1, max value set to 1 i think it allows skew to pass through
     (m-mean(m,na.rm=TRUE))/max(abs(m-mean(m,na.rm=TRUE)),na.rm=TRUE)
   }
   else if (type=="unitize"){ ##normalize and linearly scaled between -1 and 1
