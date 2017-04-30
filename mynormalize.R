@@ -5,10 +5,10 @@ mynormalize<-function(m,type="znorm"){
   else if (type=="normalrange") { ##normalize and scaled between -1 to 1, max value set to 1 i think it allows skew to pass through
     (m-mean(m,na.rm=TRUE))/max(abs(m-mean(m,na.rm=TRUE)),na.rm=TRUE)
   }
-  else if (type=="unitize"){ ##normalize and linearly scaled between -1 and 1
+  else if (type=="unitize"){ ##normalize and linearly scaled between -1 and 1. including range means it is more affected by outliers
     (m-mean(m,na.rm=TRUE))/(max(m,na.rm=TRUE)-min(m,na.rm=TRUE))
   }
-  else if (type=="scale"){ ##this is a linear scaling between max and min
+  else if (type=="scale"){ ##this is a linear scaling between max and min. range means it is more affected by outliers
     (m-min(m,na.rm=TRUE))/(max(m,na.rm=TRUE)-min(m,na.rm=TRUE))
   }
   
