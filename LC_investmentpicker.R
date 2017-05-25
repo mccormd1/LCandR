@@ -1,12 +1,12 @@
 ## LC_investmentpicker.r - hopefully screens LC data and finds data with lowest default rate.
 #unfortunately this has no algorithm optimization b/c idk where the data to train would be.
 
-
+library(tidyverse)
 
 getwd()
 dir()
 setwd("Downloads/")
-my_data<-read_csv('primaryMarketNotes-browseNotes_1-RETAIL.csv')
+my_data<-read_csv('primaryMarketNotes-browseNotes_1-RETAIL (2).csv')
 
 summary(my_data)
 names(my_data)
@@ -32,6 +32,6 @@ rel_data %>%
   filter(term==36, purpose %in% c("Credit card refinancing", "Debt consolidation"), home_ownership %in% c("MORTGAGE","OWN"),emp_length %in% c("3 years","4 years","5 years","6 years","7 years","8 years","9 years","10+ years"),delinq_2yrs==0) %>%
   mutate(payperc=installment/(annual_inc/12)) %>%
   filter(dti<=25,payperc<=.10) %>%
-  arrange(desc(int_rate)) -> ranked_data
+  arrange(desc(int_rate),installment) -> ranked_data
   head(ranked_data,10)
   
