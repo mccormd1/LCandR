@@ -26,7 +26,7 @@ def distribution(data, transformed = False):
     fig = pl.figure(figsize = (11,5));
 
     # Skewed feature plotting
-    for i, feature in enumerate(['emp_length','annual_inc','dti','delinq_2yrs','inq_last_6mths','open_acc','pub_rec','revol_bal','revol_util','total_acc','collections_12_mths_ex_med']):
+    for i, feature in enumerate(['emp_length','annual_inc','dti','delinq_2yrs','earliest_cr_line','inq_last_6mths','open_acc','pub_rec','revol_bal','revol_util','total_acc','collections_12_mths_ex_med']):
         ax = fig.add_subplot(3, 4, i+1)
         ax.hist(data[feature], bins = 25, color = '#00A0A0')
         ax.set_title("'%s'"%(feature), fontsize = 14)
@@ -46,7 +46,7 @@ def distribution(data, transformed = False):
     fig.show()
 
 
-def evaluate(results, accuracy, f1):
+def evaluate(results, mse, r2):
     """
     Visualization code to display results of various learners.
     
@@ -66,7 +66,7 @@ def evaluate(results, accuracy, f1):
     
     # Super loop to plot four panels of data
     for k, learner in enumerate(results.keys()):
-        for j, metric in enumerate(['train_time', 'acc_train', 'f_train', 'pred_time', 'acc_test', 'f_test']):
+        for j, metric in enumerate(['train_time', 'mse_train', 'R2_train', 'pred_time', 'mse_test', 'R2_test']):
             for i in np.arange(3):
                 
                 # Creative plot code
@@ -78,25 +78,25 @@ def evaluate(results, accuracy, f1):
     
     # Add unique y-labels
     ax[0, 0].set_ylabel("Time (in seconds)")
-    ax[0, 1].set_ylabel("Accuracy Score")
-    ax[0, 2].set_ylabel("F-score")
+    ax[0, 1].set_ylabel("MSE")
+    ax[0, 2].set_ylabel("R^2")
     ax[1, 0].set_ylabel("Time (in seconds)")
-    ax[1, 1].set_ylabel("Accuracy Score")
-    ax[1, 2].set_ylabel("F-score")
+    ax[1, 1].set_ylabel("MSE")
+    ax[1, 2].set_ylabel("R^2")
     
     # Add titles
     ax[0, 0].set_title("Model Training")
-    ax[0, 1].set_title("Accuracy Score on Training Subset")
-    ax[0, 2].set_title("F-score on Training Subset")
+    ax[0, 1].set_title("MSE on Training Subset")
+    ax[0, 2].set_title("R^2 on Training Subset")
     ax[1, 0].set_title("Model Predicting")
-    ax[1, 1].set_title("Accuracy Score on Testing Set")
-    ax[1, 2].set_title("F-score on Testing Set")
+    ax[1, 1].set_title("MSE on Testing Set")
+    ax[1, 2].set_title("R^2 on Testing Set")
     
     # Add horizontal lines for naive predictors
-    ax[0, 1].axhline(y = accuracy, xmin = -0.1, xmax = 3.0, linewidth = 1, color = 'k', linestyle = 'dashed')
-    ax[1, 1].axhline(y = accuracy, xmin = -0.1, xmax = 3.0, linewidth = 1, color = 'k', linestyle = 'dashed')
-    ax[0, 2].axhline(y = f1, xmin = -0.1, xmax = 3.0, linewidth = 1, color = 'k', linestyle = 'dashed')
-    ax[1, 2].axhline(y = f1, xmin = -0.1, xmax = 3.0, linewidth = 1, color = 'k', linestyle = 'dashed')
+    ax[0, 1].axhline(y = mse, xmin = -0.1, xmax = 3.0, linewidth = 1, color = 'k', linestyle = 'dashed')
+    ax[1, 1].axhline(y = mse, xmin = -0.1, xmax = 3.0, linewidth = 1, color = 'k', linestyle = 'dashed')
+    ax[0, 2].axhline(y = r2, xmin = -0.1, xmax = 3.0, linewidth = 1, color = 'k', linestyle = 'dashed')
+    ax[1, 2].axhline(y = r2, xmin = -0.1, xmax = 3.0, linewidth = 1, color = 'k', linestyle = 'dashed')
     
     # Set y-limits for score panels
     ax[0, 1].set_ylim((0, 1))
