@@ -26,8 +26,8 @@ def distribution(data, transformed = False):
     fig = pl.figure(figsize = (11,5));
 
     # Skewed feature plotting
-    for i, feature in enumerate(['emp_length','annual_inc','dti','delinq_2yrs','earliest_cr_line','inq_last_6mths','open_acc','pub_rec','revol_bal','revol_util','total_acc','collections_12_mths_ex_med']):
-        ax = fig.add_subplot(3, 4, i+1)
+    for i, feature in enumerate(['loan_amnt','emp_length','annual_inc','dti','delinq_2yrs','earliest_cr_line','inq_last_6mths','open_acc','pub_rec','revol_bal','revol_util','total_acc','collections_12_mths_ex_med']):
+        ax = fig.add_subplot(3, 5, i+1)
         ax.hist(data[feature], bins = 25, color = '#00A0A0')
         ax.set_title("'%s'"%(feature), fontsize = 14)
         ax.set_xlabel("Value")
@@ -116,7 +116,7 @@ def evaluate(results, mse, r2):
     pl.tight_layout()
     pl.show()
     
-def classevaluate(results, accuracy, fscore):
+def classevaluate(results, ROCAUC, prec):
     """
     Visualization code to display results of various learners.
     
@@ -136,7 +136,7 @@ def classevaluate(results, accuracy, fscore):
     
     # Super loop to plot four panels of data
     for k, learner in enumerate(results.keys()):
-        for j, metric in enumerate(['train_time', 'acc_train', 'f_train', 'pred_time', 'acc_test', 'f_test']):
+        for j, metric in enumerate(['train_time', 'ROC_AUC_train', 'precision_train', 'pred_time', 'ROC_AUC_test', 'precision_test']):
             for i in np.arange(3):
                 
                 # Creative plot code
@@ -148,25 +148,25 @@ def classevaluate(results, accuracy, fscore):
     
     # Add unique y-labels
     ax[0, 0].set_ylabel("Time (in seconds)")
-    ax[0, 1].set_ylabel("accuracy")
-    ax[0, 2].set_ylabel("f-score")
+    ax[0, 1].set_ylabel("ROC AUC")
+    ax[0, 2].set_ylabel("Precisiion")
     ax[1, 0].set_ylabel("Time (in seconds)")
-    ax[1, 1].set_ylabel("accuracy")
-    ax[1, 2].set_ylabel("fscore")
+    ax[1, 1].set_ylabel("ROC AUC")
+    ax[1, 2].set_ylabel("Precision")
     
     # Add titles
     ax[0, 0].set_title("Model Training")
-    ax[0, 1].set_title("accuracy on Training Subset")
-    ax[0, 2].set_title("f-score on Training Subset")
+    ax[0, 1].set_title("ROC AUC on Training Subset")
+    ax[0, 2].set_title("Precision on Training Subset")
     ax[1, 0].set_title("Model Predicting")
-    ax[1, 1].set_title("accuracy on Testing Set")
-    ax[1, 2].set_title("f-score on Testing Set")
+    ax[1, 1].set_title("ROC AUC on Testing Set")
+    ax[1, 2].set_title("Precision on Testing Set")
     
     # Add horizontal lines for naive predictors
-    ax[0, 1].axhline(y = accuracy, xmin = -0.1, xmax = 3.0, linewidth = 1, color = 'k', linestyle = 'dashed')
-    ax[1, 1].axhline(y = accuracy, xmin = -0.1, xmax = 3.0, linewidth = 1, color = 'k', linestyle = 'dashed')
-    ax[0, 2].axhline(y = fscore, xmin = -0.1, xmax = 3.0, linewidth = 1, color = 'k', linestyle = 'dashed')
-    ax[1, 2].axhline(y = fscore, xmin = -0.1, xmax = 3.0, linewidth = 1, color = 'k', linestyle = 'dashed')
+    ax[0, 1].axhline(y = ROCAUC, xmin = -0.1, xmax = 3.0, linewidth = 1, color = 'k', linestyle = 'dashed')
+    ax[1, 1].axhline(y = ROCAUC, xmin = -0.1, xmax = 3.0, linewidth = 1, color = 'k', linestyle = 'dashed')
+    ax[0, 2].axhline(y = prec, xmin = -0.1, xmax = 3.0, linewidth = 1, color = 'k', linestyle = 'dashed')
+    ax[1, 2].axhline(y = prec, xmin = -0.1, xmax = 3.0, linewidth = 1, color = 'k', linestyle = 'dashed')
     
     # Set y-limits for score panels
     ax[0, 1].set_ylim((0, 1))
