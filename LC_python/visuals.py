@@ -186,22 +186,45 @@ def classevaluate(results, ROCAUC, prec):
     pl.tight_layout()
     pl.show()
 
+# def feature_plot(importances, X_train, y_train):    
+    
+    # Display the five most important features
+#     indices = np.argsort(importances)[::-1]
+#     columns = X_train.columns.values[indices[:5]]
+#     values = importances[indices][:5]
+# 
+#     # Creat the plot
+#     fig = pl.figure(figsize = (9,5))
+#     pl.title("Normalized Weights for First Five Most Predictive Features", fontsize = 16)
+#     pl.bar(np.arange(5), values, width = 0.6, align="center", color = '#00A000', \
+#           label = "Feature Weight")
+#     pl.bar(np.arange(5) - 0.3, np.cumsum(values), width = 0.2, align = "center", color = '#00A0A0', \
+#           label = "Cumulative Feature Weight")
+#     pl.xticks(np.arange(5), columns)
+#     pl.xlim((-0.5, 4.5))
+#     pl.ylabel("Weight", fontsize = 12)
+#     pl.xlabel("Feature", fontsize = 12)
+#     
+#     pl.legend(loc = 'upper center')
+#     pl.tight_layout()
+#     pl.show()  
+
 def feature_plot(importances, X_train, y_train):
     
     # Display the five most important features
     indices = np.argsort(importances)[::-1]
-    columns = X_train.columns.values[indices[:5]]
-    values = importances[indices][:5]
+    columns = X_train.columns.values[indices[:10]]
+    values = importances[indices][:10]
 
-    # Creat the plot
-    fig = pl.figure(figsize = (9,5))
-    pl.title("Normalized Weights for First Five Most Predictive Features", fontsize = 16)
-    pl.bar(np.arange(5), values, width = 0.6, align="center", color = '#00A000', \
+    # Create the plot
+    fig = pl.figure(figsize = (10,5))
+    pl.title("Normalized Weights for First Ten Most Predictive Features", fontsize = 16)
+    pl.bar(np.arange(10), values, width = 0.6, align="center", color = '#00A000', \
           label = "Feature Weight")
-    pl.bar(np.arange(5) - 0.3, np.cumsum(values), width = 0.2, align = "center", color = '#00A0A0', \
+    pl.bar(np.arange(10) - 0.3, np.cumsum(values), width = 0.2, align = "center", color = '#00A0A0', \
           label = "Cumulative Feature Weight")
-    pl.xticks(np.arange(5), columns)
-    pl.xlim((-0.5, 4.5))
+    pl.xticks(np.arange(10), columns)
+    pl.xlim((-0.5, 9.5))
     pl.ylabel("Weight", fontsize = 12)
     pl.xlabel("Feature", fontsize = 12)
     
